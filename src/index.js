@@ -4,7 +4,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchImages } from './pixaby-api';
 import { throttle } from 'lodash';
 
-// DOM
 
 const gallery = document.querySelector('.gallery');
 const form = document.querySelector('.search-form');
@@ -23,22 +22,19 @@ const refs = {
   SCROLL_THROTTLE_INTERVAL: 300
 };
 
-let endOfPageNotified = false; // variable in order to notify "limitMessage" only once
+let endOfPageNotified = false; 
 
-const lightbox = new SimpleLightbox('.gallery a'); // declare lightbox gallery
+const lightbox = new SimpleLightbox('.gallery a'); // lightbox gallery
 
-//Listeners
 
 form.addEventListener('submit', handleSubmit);
 
 btn.addEventListener('click', handleClick);
 
-// handeSubmit function
 
 async function handleSubmit(e) {
-  e.preventDefault(); //prevent default actions
-
-  // resetting default values on re-query without reloading page
+  e.preventDefault();
+  
     refs.page = 1;
     refs.totalPages = 0;
     endOfPageNotified = false; 
@@ -46,7 +42,7 @@ async function handleSubmit(e) {
 
     gallery.textContent = ''; // clear markup of the gallery container
 
-  let query = form.searchQuery.value.trim(); // value of input text without superflours spaces
+  let query = form.searchQuery.value.trim(); 
 
  
 
@@ -65,12 +61,6 @@ async function handleSubmit(e) {
     }
 
     refs.totalPages = Math.ceil(result.totalHits / refs.LIMIT); // Count total pages
-
-    // if (refs.totalPages <= refs.page && result.hits.length > 0) {
-    //   // Check for the last page
-
-    //   return Notiflix.Notify.failure(refs.limitMessage);
-    // }
 
     renderMarkup(result.hits); // Call the function to render markup
 
@@ -189,15 +179,14 @@ async function fetchAndRenderImages() {
     Notiflix.Notify.failure(refs.errorResponseMessage);
   }
 }
-//-----------------------------------------------
+
 
 function handleButtonVisibility() {
-  // Handle visiblity "to top" button
 
   btn.classList.toggle('show', window.scrollY > 300);
 }
 
-//----------------------------------------------
+
 
 function handleClick(e) {
   // Handle click on the "to top" button
